@@ -1,0 +1,47 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateHostelRoomTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('hostel_room', function (Blueprint $table) {
+            $table->unsignedInteger('hostel_id')->index();
+            $table->unsignedInteger('room_id')->index();
+            $table->float('room_price');
+            $table->unsignedInteger('available_quantity');
+
+            $table->foreign('hostel_id')
+                ->references('hostel_id')
+                ->on('hostel')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreign('room_id')
+                ->references('room_id')
+                ->on('room')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('hostel_room');
+    }
+}
